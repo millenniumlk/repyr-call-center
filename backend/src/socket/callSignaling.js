@@ -275,16 +275,19 @@ function _verifyMembership(socket, callId, expectedRole) {
 
   const info = socketCallMap.get(socket.id);
   if (!info) {
+    console.error(`[Verify] Socket ${socket.id} has no info for call ${callId}`);
     socket.emit('call:error', { callId, message: 'Not authorized for this call.' });
     return false;
   }
 
   if (info.callId !== callId) {
+    console.error(`[Verify] Socket ${socket.id} info.callId (${info.callId}) !== ${callId}`);
     socket.emit('call:error', { callId, message: 'Not authorized for this call.' });
     return false;
   }
 
   if (expectedRole && info.role !== expectedRole) {
+    console.error(`[Verify] Socket ${socket.id} info.role (${info.role}) !== ${expectedRole}`);
     socket.emit('call:error', { callId, message: `Action not allowed for role: ${info.role}` });
     return false;
   }
