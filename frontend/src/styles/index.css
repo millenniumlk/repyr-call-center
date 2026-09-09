@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #0f172a;
+    color: #f1f5f9;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl
+           bg-repyr-600 hover:bg-repyr-700 active:bg-repyr-800
+           text-white font-semibold text-sm
+           transition-all duration-150
+           disabled:opacity-50 disabled:cursor-not-allowed
+           focus:outline-none focus:ring-2 focus:ring-repyr-500 focus:ring-offset-2 focus:ring-offset-slate-900;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl
+           bg-red-600 hover:bg-red-700 active:bg-red-800
+           text-white font-semibold text-sm
+           transition-all duration-150
+           disabled:opacity-50 disabled:cursor-not-allowed
+           focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-slate-900;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl
+           bg-white/10 hover:bg-white/20 active:bg-white/30
+           text-white font-semibold text-sm
+           transition-all duration-150
+           disabled:opacity-50 disabled:cursor-not-allowed
+           focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-slate-900;
+  }
+
+  /* Ringing animation rings */
+  .ring-outer {
+    @apply absolute inset-0 rounded-full border-2 border-repyr-400 opacity-0 animate-ring;
+  }
+
+  .ring-middle {
+    @apply absolute inset-0 rounded-full border-2 border-repyr-400 opacity-0 animate-ring;
+    animation-delay: 0.5s;
+  }
+}
