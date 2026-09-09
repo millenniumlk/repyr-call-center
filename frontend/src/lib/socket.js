@@ -17,11 +17,11 @@ const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:3001';
 const socket = io(SOCKET_URL, {
   // Don't auto-connect — we control connection timing
   autoConnect: false,
-  // Prefer WebSocket for lower latency signaling
-  transports: ['websocket', 'polling'],
+  // Prefer WebSocket ONLY to prevent transport upgrade disconnects on proxy tunnels
+  transports: ['websocket'],
   // Reconnection settings
   reconnection: true,
-  reconnectionAttempts: 5,
+  reconnectionAttempts: 10,
   reconnectionDelay: 1000,
   extraHeaders: {
     'Bypass-Tunnel-Reminder': 'true'
