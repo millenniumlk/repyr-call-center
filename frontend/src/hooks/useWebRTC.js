@@ -155,9 +155,9 @@ export function useWebRTC({ callId, role, token }) {
   // ─── Cleanup on unmount ────────────────────────────────────────────────
   useEffect(() => {
     return () => {
-      if (status !== 'idle') cleanup();
+      cleanup();
     };
-  }, [cleanup, status]);
+  }, [cleanup]);
 
   // ─── Create RTCPeerConnection ──────────────────────────────────────────
   const createPeerConnection = useCallback(() => {
