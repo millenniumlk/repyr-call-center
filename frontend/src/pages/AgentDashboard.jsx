@@ -70,8 +70,8 @@ export default function AgentDashboard() {
       setIsMockMode(data.mock);
       setSessionStatus('INVITATION_SENT');
 
-      // 2. Start WebRTC: get microphone, create peer connection, join signaling room
-      await rtc.connect();
+      // 2. Start WebRTC connection
+      await rtc.connect(data.callId);
       setSessionStatus('WAITING');
     } catch (err) {
       const msg = err.response?.data?.error || err.message || 'Failed to create call.';

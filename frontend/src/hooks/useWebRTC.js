@@ -467,8 +467,9 @@ export function useWebRTC({ callId, role, token }) {
   }, [callId, role, cleanup, flushPendingCandidates]);
 
   // ─── AGENT: Initialize call (connect and wait for customer) ───────────
-  const connect = useCallback(async () => {
-    if (role !== 'agent') return;
+  const connect = useCallback(async (explicitCallId = null) => {
+    const activeCallId = explicitCallId || callId;
+    if (role !== 'agent' || !activeCallId) return;
     cleanedUp.current = false;
     setError(null);
     setStatus('connecting');
@@ -491,13 +492,13 @@ export function useWebRTC({ callId, role, token }) {
 
       // 6. Tell server the agent is ready for this call
       socket.once('connect', () => {
-        socket.emit('call:agent-join', { callId });
+        socket.emit('call:agent-join', { callId: activeCallId });
         setStatus('waiting');
       });
 
       // If socket is already connected
       if (socket.connected) {
-        socket.emit('call:agent-join', { callId });
+        socket.emit('call:agent-join', { callId: activeCallId });
         setStatus('waiting');
       }
     } catch (err) {
