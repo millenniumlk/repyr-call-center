@@ -24,7 +24,8 @@ const socket = io(SOCKET_URL, {
   reconnectionAttempts: 10,
   reconnectionDelay: 1000,
   extraHeaders: {
-    'Bypass-Tunnel-Reminder': 'true'
+    'Bypass-Tunnel-Reminder': 'true',
+    'ngrok-skip-browser-warning': 'true'
   }
 });
 
