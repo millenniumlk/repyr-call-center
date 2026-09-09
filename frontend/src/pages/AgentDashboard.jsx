@@ -312,14 +312,6 @@ export default function AgentDashboard() {
 
       {/* ── Right Panel: Technical Status ───────────────────────────────────── */}
       <aside className="w-80 bg-slate-900 border-l border-slate-800 p-6 shrink-0 hidden lg:block overflow-y-auto">
-        {/* WhatsApp connection */}
-        <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">
-          WhatsApp
-        </h2>
-        <div className="mb-6">
-          <WhatsAppPanel />
-        </div>
-
         <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">
           Connection Details
         </h2>

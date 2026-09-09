@@ -16,11 +16,13 @@ const { Server: SocketServer } = require('socket.io');
 const cors = require('cors');
 
 const callRoutes = require('./src/routes/calls');
-const whatsappRoutes = require('./src/routes/whatsapp');
 const { registerSignalingHandlers } = require('./src/socket/callSignaling');
-const { initWhatsApp } = require('./src/services/whatsappService');
+
+process.on('uncaughtException', (err) => console.error('[Global] Uncaught Exception:', err));
+process.on('unhandledRejection', (reason) => console.error('[Global] Unhandled Rejection:', reason));
 
 const app = express();
+app.set('trust proxy', 1); // Trust first proxy (localtunnel)
 const httpServer = http.createServer(app);
 
 // --- CORS ---
@@ -38,7 +40,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // --- HTTP Routes ---
 app.use('/api/calls', callRoutes);
-app.use('/api/whatsapp', whatsappRoutes);
 
 // Health check
 app.get('/health', (_req, res) => res.json({ status: 'ok', ts: Date.now() }));
@@ -71,11 +72,7 @@ httpServer.listen(PORT, () => {
   console.log(`   HTTP  : http://localhost:${PORT}`);
   console.log(`   WS    : ws://localhost:${PORT}`);
   console.log(`   CORS  : All origins allowed (dev mode)`);
-  console.log(`   WhatsApp mock: ${process.env.MOCK_WHATSAPP === 'true' ? 'YES — no QR needed' : 'NO — initializing WhatsApp Web…'}`);
   console.log();
-
-  // Initialize WhatsApp Web client (shows QR in terminal if not mock)
-  initWhatsApp();
 });
 
 module.exports = { app, io };

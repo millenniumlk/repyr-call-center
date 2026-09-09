@@ -5,11 +5,11 @@
  */
 
 const callSessionService = require('../services/callSessionService');
-const whatsappService = require('../services/whatsappService');
+const smsService = require('../services/smsService');
 
 /**
  * POST /api/calls
- * Create a new call session and send the WhatsApp invitation.
+ * Create a new call session and send the SMS invitation.
  */
 async function createCall(req, res) {
   try {
@@ -22,15 +22,15 @@ async function createCall(req, res) {
     // 2. Update status to sending
     callSessionService.updateCallStatus(session.callId, 'INVITATION_SENDING');
 
-    // 3. Send WhatsApp (or mock)
+    // 3. Send SMS (or mock)
     try {
-      await whatsappService.sendCallInvitation({
+      await smsService.sendCallInvitation({
         phoneNumber: customerPhone,
         callUrl: session.callUrl,
       });
       callSessionService.updateCallStatus(session.callId, 'INVITATION_SENT');
-    } catch (waError) {
-      console.error('[Controller] WhatsApp send failed:', waError.message);
+    } catch (smsError) {
+      console.error('[Controller] SMS send failed:', smsError.message);
       // Don't block the call — agent can still share URL manually
       callSessionService.updateCallStatus(session.callId, 'INVITATION_FAILED');
     }
